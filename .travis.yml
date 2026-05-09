@@ -1,0 +1,22 @@
+language: minimal
+
+services:
+  - docker
+
+# Build test image and run tests
+before_install:
+  - docker build -t ferashatem/docker-react:test -f Dockerfile.dev .
+
+script:
+  - docker run -e CI=true ferashatem/docker-react:test npm test -- --watchAll=false
+
+# After tests pass, build production image
+after_success:
+  - docker build -t ferashatem/docker-react:latest .
+
+# Push to Docker Hub on main branch
+deploy:
+  provider: script
+  script: bash docker-push.sh
+  on:
+    branch: main
