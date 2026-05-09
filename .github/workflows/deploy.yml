@@ -16,7 +16,7 @@ jobs:
         run: docker build -t docker-react:test -f Dockerfile.dev .
 
       - name: Run tests
-        run: docker run -e CI=true docker-react:test npm test -- --watchAll=false
+        run: docker run -e CI=true docker-react:test npm test -- --run
 
       - name: Build production image
         run: docker build -t ferashatem/docker-react:latest .
